@@ -16,6 +16,5 @@ else:
             print "connected", sock.getsockname(), sock.getpeername()
             time.sleep(60*60)
         except socket.error, e:
-            print 'error', e
             if e.errno != errno.ECONNREFUSED:
                 break
