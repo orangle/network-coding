@@ -1,8 +1,11 @@
 package main 
+/*
+go run roundtrip.go -s
 
-// pack struct ?
-// udp ？
-// timestamp 
+go run roundtrip.go -c 3
+在没有启动server的时候，为啥client也会有read event呢?
+*/
+
 import (
 	"encoding/gob"
 	"bytes"
@@ -60,7 +63,8 @@ func client(count int, interval int) {
 	for i:=0; i<count; i++ {
 		var req Message
 		inputBytes := make([]byte, 4096)
-		length, _, err:= conn.ReadFromUDP(inputBytes)
+		//length, _, err:= conn.ReadFromUDP(inputBytes)
+		length, err:= conn.Read(inputBytes)
 		if err != nil {
 			fmt.Println("get msg length", length, err)
 			continue
@@ -74,7 +78,6 @@ func client(count int, interval int) {
 		//fmt.Println(back, req.Response, req.Request, mine)
 		fmt.Printf("%d :now %d round trip %d clock error %d\n", 
 			i, back, back - req.Request, req.Response - mine)
-		
 		//time.Sleep(time.Duration(interval) * time.Second)
 	}
 }
