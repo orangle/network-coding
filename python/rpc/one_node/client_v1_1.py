@@ -21,8 +21,8 @@ def rpc(sock, in_, params):
 if __name__ == "__main__":
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.connect(("127.0.0.1", 8833))
-    for i in range(100):
+    for i in range(20):
         out, result = rpc(sock, "ping", "lzz %s" % i)
         print out, result
-        time.sleep(0.1)
+        time.sleep(0.5)
     sock.close()
